@@ -17,17 +17,22 @@ class TravelsTableSeeder extends Seeder
         for ($i=0; $i < 100; $i++) { 
             
             $new_travel = new Travel();
-            $new_travel->partenza = "Roma";
-            $new_travel->destinazione = "Los Angeles";
-            $new_travel->andata = '2021-12-20 07:05:00';
-            $new_travel->ritorno = '2021-12-28 10:05:00';
-            $new_travel->alloggio = "Casa in affitto";
-            $new_travel->persone = 4;
-            $new_travel->descrizione = "Bellissima casa a Venice Beach";
-            $new_travel->prezzo = '1200.00';
-            $new_travel->posti_rimasti = 10;
+            $new_travel->partenza = $faker->city();
+            $new_travel->destinazione = $faker->city();
+            $new_travel->andata = $faker->dateTimeThisYear();
+            $new_travel->ritorno = $faker->dateTimeThisYear();
+            $new_travel->alloggio = $this->typeAlloggio();
+            $new_travel->persone = $faker->numberBetween(0, 10);
+            $new_travel->descrizione = $faker->sentence();
+            $new_travel->prezzo = $faker->numberBetween(500, 1000);
+            $new_travel->posti_rimasti = $faker->numberBetween(0, 10);
             $new_travel->save();
         }
+    }
 
+    private function typeAlloggio(){
+        $arr = ['casa privata', 'hotel', 'villetta', 'loft'];
+        shuffle($arr);
+        return $arr[0];
     }
 }
